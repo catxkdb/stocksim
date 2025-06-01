@@ -3,303 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CashCon - Financial Tracker</title>
+    <title>Stock Market Simulator</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>CashCon</h1>
-        <div class="user-stats">
-            <span class="points">🏆 3,750 Points</span>
-            <span class="coins">💰 1,500 Coins</span>
-            <button class="profile-button" onclick="toggleProfileDropdown()">
-                <span class="profile-icon">👤</span>
-                <div class="profile-dropdown">
-                    <div class="profile-header">
-                        <h3>Your Profile</h3>
-                        <div class="level-badge">
-                            <span class="level">Level 8</span>
-                            <div class="exp-bar">
-                                <div class="exp-progress" style="width: 75%"></div>
-                            </div>
+    <div id="startScreen" class="start-screen">
+        <div class="tutorial-container">
+            <h1>Stock Market Simulator</h1>
+            <div class="lesson-selection">
+                <h2>Select a Lesson</h2>
+                <div class="lesson-grid">
+                    <div class="lesson-card" data-lesson="freeplay">
+                        <div class="lesson-icon">🎮</div>
+                        <h3>Free Play</h3>
+                        <p>Jump straight into the market simulation</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <span class="stat-icon">🎯</span>
-                            <span class="stat-value">Level 8</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-icon">⭐</span>
-                            <span class="stat-value">75% to Level 9</span>
+                    <div class="lesson-card" data-lesson="media">
+                        <div class="lesson-icon">📰</div>
+                        <h3>Media Analysis</h3>
+                        <p>Learn how news and media affect stock prices</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="profile-badges">
-                        <h4>Recent Badges</h4>
-                        <div class="badge-list">
-                            <!-- Badges will be added dynamically -->
+                    <div class="lesson-card" data-lesson="types">
+                        <div class="lesson-icon">📊</div>
+                        <h3>Types of Stocks</h3>
+                        <p>Understanding different stock categories</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="lesson-card" data-lesson="selling">
+                        <div class="lesson-icon">💰</div>
+                        <h3>When to Sell</h3>
+                        <p>Master the art of selling at the right time</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="lesson-card" data-lesson="crashes">
+                        <div class="lesson-icon">📉</div>
+                        <h3>Market Crashes</h3>
+                        <p>Understanding and navigating market downturns</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="lesson-card" data-lesson="fundamentals">
+                        <div class="lesson-icon">📈</div>
+                        <h3>Fundamental Analysis</h3>
+                        <p>Learn to analyze company fundamentals</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="lesson-card" data-lesson="technical">
+                        <div class="lesson-icon">📊</div>
+                        <h3>Technical Analysis</h3>
+                        <p>Understanding charts and technical indicators</p>
+                        <div class="lesson-progress">
+                            <div class="progress-bar" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
-            </button>
+            </div>
+            <div class="tutorial-section" style="display: none;">
+                <h2>How News Affects Stock Prices</h2>
+                <div class="news-examples">
+                    <div class="news-example positive">
+                        <h3>Positive News Examples:</h3>
+                        <ul>
+                            <li>Better than expected earnings reports</li>
+                            <li>New product launches</li>
+                            <li>Market expansion announcements</li>
+                            <li>Major contract wins</li>
+                            <li>Positive industry trends</li>
+                        </ul>
+                    </div>
+                    <div class="news-example negative">
+                        <h3>Negative News Examples:</h3>
+                        <ul>
+                            <li>Missed earnings expectations</li>
+                            <li>Product delays or issues</li>
+                            <li>Market share losses</li>
+                            <li>Contract losses</li>
+                            <li>Negative industry trends</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tutorial-tips">
+                    <h3>Trading Tips:</h3>
+                    <ul>
+                        <li>Watch for news events that can cause significant price movements</li>
+                        <li>Consider sector-wide effects - news can impact related stocks</li>
+                        <li>Use the time scale controls to analyze price movements</li>
+                        <li>Monitor the profit/loss indicators to track your performance</li>
+                    </ul>
+                </div>
+                <button id="startSimulation" class="start-button">Start Simulation</button>
+            </div>
         </div>
-    </header>
+    </div>
 
-    <main class="container">
-        <nav>
-            <button data-tab="dashboard" class="active">Dashboard</button>
-            <button data-tab="expenses">Expenses</button>
-            <button data-tab="earnings">Earnings</button>
-            <button data-tab="quests">Quests & Challenges</button>
-            <button data-tab="leaderboard">Leaderboard</button>
-            <button><a class="stock-link" target="_blank" href="https://catxkdb.github.io/stocksim/">Stock Simulator</a></button>
-        </nav>
-
-        <section id="dashboard" class="tab-content active">
-            <div class="dashboard-header">
-                <h2>Financial Overview</h2>
-                <div class="streaks">
-                    <div class="streak">
-                        <span class="streak-icon">🔥</span>
-                        <span class="streak-count">0</span>
-                        <span class="streak-label">Day Saving Streak</span>
-                    </div>
+    <div id="simulationScreen" class="container" style="display: none;">
+        <header>
+            <h1>Stock Market Simulator</h1>
+            <div class="portfolio-summary">
+                <div class="cash-balance">
+                    <h2>Cash Balance</h2>
+                    <div id="cashBalance">$10,000.00</div>
+                </div>
+                <div class="portfolio-value">
+                    <h2>Portfolio Value</h2>
+                    <div id="portfolioValue">$0.00</div>
                 </div>
             </div>
-            <div class="dashboard-grid">
-                <div class="chart-container">
-                    <canvas id="expenseChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="categoryChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="trendChart"></canvas>
-                </div>
-            </div>
-            <div class="insights-container">
-                <!-- Insights will be dynamically added here -->
-            </div>
-        </section>
+        </header>
 
-        <section id="earnings" class="tab-content">
-            <div class="earnings-container">
-                <div class="earnings-header">
-                    <h2>Earnings Overview</h2>
+        <section class="graphs-section">
+            <h2>Stock Trends</h2>
+            <div class="trend-controls">
+                <div class="trend-buttons">
+                    <button id="toggleAllTrends" class="trend-button">Toggle All</button>
                 </div>
-                <div class="earnings-grid">
-                    <div class="chart-container">
-                        <canvas id="earningsChart"></canvas>
-                    </div>
-                    <div class="earnings-summary">
-                        <div class="summary-card">
-                            <h3>Monthly Earnings</h3>
-                            <p class="amount">$0.00</p>
-                        </div>
-                        <div class="summary-card">
-                            <h3>Total Savings</h3>
-                            <p class="amount">$0.00</p>
-                        </div>
-                    </div>
+                <div class="time-scale-buttons">
+                    <button class="time-scale active" data-minutes="5">5m</button>
+                    <button class="time-scale" data-minutes="10">10m</button>
+                    <button class="time-scale" data-minutes="30">30m</button>
+                    <button class="time-scale" data-minutes="0">All</button>
                 </div>
+                <div class="speed-controls">
+                    <button class="speed-button" data-speed="5" title="Slow (5s)">⏪</button>
+                    <button class="speed-button active" data-speed="3" title="Normal (3s)">▶</button>
+                    <button class="speed-button" data-speed="1" title="Fast (1s)">⏩</button>
+                    <button class="speed-button" data-speed="0" title="Pause">⏸</button>
+                </div>
+            </div>
+            <div class="graph-container">
+                <canvas id="stockChart"></canvas>
             </div>
         </section>
 
-        <section id="expenses" class="tab-content">
-            <div class="expenses-container">
-                <div class="expense-form">
-                    <h3>Add New Expense</h3>
-                    <form id="expenseForm">
-                        <div class="form-group">
-                            <label for="expenseTitle">Title</label>
-                            <input type="text" id="expenseTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="expenseAmount">Amount</label>
-                            <input type="number" id="expenseAmount" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="expenseCategory">Category</label>
-                            <select id="expenseCategory" required>
-                                <option value="">Select Category</option>
-                                <option value="food">Food</option>
-                                <option value="transport">Transport</option>
-                                <option value="utilities">Utilities</option>
-                                <option value="entertainment">Entertainment</option>
-                                <option value="shopping">Shopping</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="paymentMethod">Payment Method</label>
-                            <select id="paymentMethod" required>
-                                <option value="">Select Payment Method</option>
-                                <option value="cash">Cash</option>
-                                <option value="credit">Credit Card</option>
-                                <option value="debit">Debit Card</option>
-                                <option value="transfer">Bank Transfer</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="receiptUpload">Upload Receipt</label>
-                            <div id="dropZone" class="drop-zone">
-                                <span class="drop-zone-prompt">Drop receipt here or click to upload</span>
-                                <input type="file" id="receiptUpload" accept="image/*" class="drop-zone-input">
-                            </div>
-                            <div id="receiptPreview" class="receipt-preview"></div>
-                        </div>
-                        <button type="button" onclick="addExpense()">Add Expense</button>
-                    </form>
-                </div>
-                <div class="expense-list">
-                    <h3>Recent Expenses</h3>
-                    <div id="expensesList">
-                        <!-- Expenses will be added dynamically -->
-                    </div>
-                </div>
-            </div>
-        </section>
+        <main>
+            <section class="market-section">
+                <h2>Market</h2>
+                <div class="stock-list" id="stockList"></div>
+            </section>
 
-        <section id="quests" class="tab-content">
-            <div class="quests-container">
-                <div class="active-quests">
-                    <h3>Active Quests</h3>
-                    <div class="quest-list">
-                        <!-- Quests will be added dynamically -->
-                    </div>
-                </div>
+            <section class="portfolio-section">
+                <h2>Portfolio</h2>
+                <div class="portfolio-list" id="portfolioList"></div>
+            </section>
 
-                <div class="challenges">
-                    <h3>Weekly Challenges</h3>
-                    <div class="challenge-list weekly">
-                        <!-- Weekly challenges will be added dynamically -->
-                    </div>
-
-                    <h3>Monthly Challenges</h3>
-                    <div class="challenge-list monthly">
-                        <!-- Monthly challenges will be added dynamically -->
-                    </div>
-                </div>
-
-                <div class="badges">
-                    <h3>Your Badges</h3>
-                    <div class="badge-grid">
-                        <!-- Badges will be added dynamically -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="avatar" class="tab-content">
-            <div class="avatar-container">
-                <div class="avatar-preview">
-                    <img src="image.png" alt="Your Avatar" class="user-avatar" />
-                    <div class="avatar-info">
-                        <h3>Level 1</h3>
-                        <p>0 Points</p>
-                    </div>
-                </div>
-
-                <div class="avatar-customization">
-                    <div class="shop-tabs">
-                        <button class="shop-tab active" data-category="outfits">Outfits</button>
-                        <button class="shop-tab" data-category="accessories">Accessories</button>
-                        <button class="shop-tab" data-category="hairstyles">Hairstyles</button>
-                    </div>
-                    <div class="shop-items">
-                        <!-- Shop items will be added dynamically -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="leaderboard" class="tab-content">
-            <div class="leaderboard-container">
+            <section class="leaderboard-section">
+                <h2>Leaderboard</h2>
                 <div class="leaderboard-tabs">
-                    <button class="leaderboard-tab active" data-board="global">Global</button>
-                    <button class="leaderboard-tab" data-board="monthly">Monthly</button>
-                    <button class="leaderboard-tab" data-board="friends">Friends</button>
+                    <button class="tab-button active" data-tab="trading">Trading</button>
+                    <button class="tab-button" data-tab="quiz">Quiz</button>
                 </div>
-                <div class="leaderboard-list">
-                    <!-- Enhanced leaderboard entries will be added dynamically -->
+                <div class="leaderboard-content">
+                    <div class="leaderboard-tab active" id="tradingLeaderboard">
+                        <div class="leaderboard-header">
+                            <span>Rank</span>
+                            <span>Player</span>
+                            <span>Profit</span>
+                        </div>
+                        <div class="leaderboard-entries" id="tradingEntries"></div>
+                    </div>
+                    <div class="leaderboard-tab" id="quizLeaderboard">
+                        <div class="leaderboard-header">
+                            <span>Rank</span>
+                            <span>Player</span>
+                            <span>Score</span>
+                            <span>Streak</span>
+                        </div>
+                        <div class="leaderboard-entries" id="quizEntries"></div>
+                    </div>
                 </div>
-            </div>
+            </section>
+        </main>
+    </div>
 
-            <!-- User Profile Modal -->
-            <div class="user-profile-modal">
-                <div class="modal-content">
-                    <button class="close-modal" onclick="closeUserProfile()">&times;</button>
-                    <div class="modal-header">
-                        <img src="image.png" alt="User Avatar" class="modal-avatar" />
-                        <div class="modal-user-info">
-                            <h3 class="modal-username">Username</h3>
-                            <div class="level-badge">
-                                <span class="level">Level 1</span>
-                                <div class="exp-bar">
-                                    <div class="exp-progress"></div>
+    <!-- News Analysis Modal -->
+    <div id="newsAnalysisModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Market News Analysis</h2>
+                <div class="score-display">
+                    <span>Score: <span id="currentScore">0</span></span>
+                    <span>Correct: <span id="correctAnswers">0</span></span>
+                    <span>Streak: <span id="currentStreak">0</span>x</span>
+                </div>
+                <span class="close-button">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- News Event Details -->
+                <div class="news-event-details">
+                    <h3 id="newsTitle"></h3>
+                    <p id="newsDescription"></p>
+                </div>
+
+                <!-- Multiple Choice Questions -->
+                <div class="quiz-section">
+                    <div class="quiz-progress">
+                        Question <span id="currentQuestionNumber">1</span> of 4
+                    </div>
+                    <div class="quiz-question" data-question="1">
+                        <h4>Impact Assessment</h4>
+                        <p>How significant do you think this news will be for the stock price?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-impact="high">High Impact (>5% price change)</button>
+                            <button class="quiz-option" data-impact="moderate">Moderate Impact (2-5% price change)</button>
+                            <button class="quiz-option" data-impact="low">Low Impact (<2% price change)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Message -->
+                <div class="feedback-message" style="display: none;"></div>
+
+                <!-- Impact Analysis -->
+                <div class="impact-analysis" style="display: none;">
+                    <h3>Impact Analysis</h3>
+                    <div class="impact-details">
+                        <div class="primary-impact">
+                            <h4>Primary Impact</h4>
+                            <div id="primaryImpactDetails"></div>
+                        </div>
+                        <div class="sector-impact">
+                            <h4>Sector Impact</h4>
+                            <div id="sectorImpactDetails"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trading Advice -->
+                <div class="trading-advice" style="display: none;">
+                    <h3>Trading Advice</h3>
+                    <div id="tradingAdvice"></div>
+                </div>
+
+                <!-- Final Score Summary -->
+                <div class="score-summary" style="display: none;">
+                    <h3>Final Results</h3>
+                    <div class="score-details">
+                        <p>Correct Answers: <span id="finalCorrectAnswers">0</span></p>
+                        <p>Best Streak: <span id="bestStreak">0</span>x</p>
+                        <p>Trading Score: <span id="tradingScore">$0</span></p>
+                        <p>Total Score: <span id="totalScore">0</span></p>
+                    </div>
+                </div>
+
+                <!-- After the score-summary div and before the modal-footer -->
+                <div class="achievements-section" style="display: none;">
+                    <h3>Achievements</h3>
+                    <div class="achievements-grid">
+                        <div class="achievement" data-achievement="streak">
+                            <div class="achievement-icon">🔥</div>
+                            <div class="achievement-info">
+                                <h4>Streak Master</h4>
+                                <p>Maintain a 5x streak</p>
+                                <div class="achievement-progress">
+                                    <div class="progress-bar" id="streakProgress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="achievement" data-achievement="profit">
+                            <div class="achievement-icon">💰</div>
+                            <div class="achievement-info">
+                                <h4>Profit Pro</h4>
+                                <p>Earn $5,000 in trading profit</p>
+                                <div class="achievement-progress">
+                                    <div class="progress-bar" id="profitProgress"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="achievement" data-achievement="accuracy">
+                            <div class="achievement-icon">🎯</div>
+                            <div class="achievement-info">
+                                <h4>Perfect Predictor</h4>
+                                <p>Answer 10 questions correctly</p>
+                                <div class="achievement-progress">
+                                    <div class="progress-bar" id="accuracyProgress"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-stats">
-                        <div class="stat-item">
-                            <span class="stat-icon">🏆</span>
-                            <span class="stat-value points">0 Points</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-icon">💰</span>
-                            <span class="stat-value coins">0 Coins</span>
-                        </div>
-                    </div>
-                    <div class="modal-badges">
-                        <h4>Badges</h4>
-                        <div class="badge-grid">
-                            <!-- Badges will be added dynamically -->
-                        </div>
-                    </div>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <!-- Notification Templates -->
-    <template id="badge-notification">
-        <div class="notification badge-notification">
-            <div class="badge-icon"></div>
-            <div class="notification-content">
-                <h4>New Badge Unlocked!</h4>
-                <p class="badge-name"></p>
-                <p class="badge-description"></p>
+            <div class="modal-footer">
+                <button id="continueSimulation" class="continue-button" style="display: none;">Continue Simulation</button>
+                <button id="nextStep" class="next-button">Next Question</button>
             </div>
         </div>
-    </template>
-
-    <template id="level-notification">
-        <div class="notification level-notification">
-            <div class="level-icon">⭐</div>
-            <div class="notification-content">
-                <h4>Level Up!</h4>
-                <p class="level-message"></p>
-            </div>
-        </div>
-    </template>
-
-    <template id="quest-complete-notification">
-        <div class="notification quest-notification">
-            <div class="quest-icon">✨</div>
-            <div class="notification-content">
-                <h4>Quest Complete!</h4>
-                <p class="quest-name"></p>
-                <div class="quest-rewards"></div>
-            </div>
-        </div>
-    </template>
-
-    <div id="tradeModal" class="modal">
-        <!-- Trade modal content will be dynamically added here -->
     </div>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 
